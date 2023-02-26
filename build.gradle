@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.1.3'
+}
+
+group 'cn.sp'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = '2020.3.2'
+    plugins = ['git4idea', 'java']
+    updateSinceUntilBuild = false
+}
+//patchPluginXml {
+//    changeNotes """
+//    V1.0.0
+//    """
+//}
+test {
+    useJUnitPlatform()
+}

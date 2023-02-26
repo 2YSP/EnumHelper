@@ -1,0 +1,59 @@
+<idea-plugin>
+    <id>com.your.company.unique.plugin.id</id>
+    <name>EnumHelper</name>
+    <version>1.0</version>
+    <vendor email="stylishman525@qq.com" url="https://github.com/2YSP">ship</vendor>
+
+    <description><![CDATA[
+      Help you generate enum method(like get enum by field) fast.<br><a href="https://github.com/2YSP/EnumHelper">Source code on Github</a><br>
+      <ul>
+          <li>usage method 1：copy the enum field first, then press [Generate..] shortcut,choose the [Generate Enum Method]</li>
+          <li>usage method 2：copy the enum field first, press the shortcut[CTRL+SHIFT+J]</li>
+      </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+      <h3>V1.0.0</h3>
+      <ul>
+          <li>Support generate enum method(like get enum by field) fast </li>
+      </ul>
+    ]]>
+    </change-notes>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="GenerateCodeAction" class="cn.sp.action.GenerateCodeAction" text="Generate Enum Method">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+            <keyboard-shortcut
+                    keymap="$default"
+                    first-keystroke="control shift J"/>
+
+            <!-- ...except the "Mac OS X" keymap and its children. -->
+            <keyboard-shortcut
+                    keymap="Mac OS X"
+                    first-keystroke="control shift J"
+                    remove="true"/>
+
+            <!-- The "Mac OS X 10.5+" keymap and its children will have only
+            this keyboard shortcut for this action. -->
+            <keyboard-shortcut
+                    keymap="Mac OS X 10.5+"
+                    first-keystroke="control shift J"
+                    replace-all="true"/>
+        </action>
+    </actions>
+
+</idea-plugin>
