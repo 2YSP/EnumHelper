@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>com.your.company.unique.plugin.id</id>
+    <id>cn.sp.EnumHelper</id>
     <name>EnumHelper</name>
     <version>1.0</version>
     <vendor email="stylishman525@qq.com" url="https://github.com/2YSP">ship</vendor>
