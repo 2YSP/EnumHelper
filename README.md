@@ -1,4 +1,4 @@
-# EnumHepler
+# EnumHelper
  Help you generate enum method(like get enum by field) fast.<br>
       <ul>
           <li>usage method 1：copy the enum field first, then press [Generate..] shortcut,choose the [Generate Enum Method]</li>
