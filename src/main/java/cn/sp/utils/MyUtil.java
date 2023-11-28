@@ -1,5 +1,9 @@
 package cn.sp.utils;
 
+import cn.sp.model.GenerateContext;
+import com.intellij.pom.java.LanguageLevel;
+import com.intellij.psi.PsiJavaFile;
+
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -22,10 +26,10 @@ public class MyUtil {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    public static void main(String[] args) {
-        String str = "code";
-        System.out.println(MyUtil.transferToUpCase(str));
-    }
+//    public static void main(String[] args) {
+//        String str = "code";
+//        System.out.println(MyUtil.transferToUpCase(str));
+//    }
 
     /**
      * 获取剪切板数据，也就是 Ctrl + C
@@ -79,4 +83,17 @@ public class MyUtil {
         return 0;
 
     }
+
+    /**
+     * jdk版本是至少1.8
+     *
+     * @return
+     */
+    public static boolean isJava8OrHigher(GenerateContext generateContext) {
+        PsiJavaFile psiJavaFile = (PsiJavaFile) generateContext.getPsiFile();
+        boolean isJava8OrHigher = psiJavaFile.getLanguageLevel().isAtLeast(LanguageLevel.JDK_1_8);
+        return isJava8OrHigher;
+    }
+
+
 }

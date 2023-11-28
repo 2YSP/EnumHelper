@@ -1,5 +1,6 @@
 package cn.sp.service.impl;
 
+import cn.sp.constant.EnumHelperConstants;
 import cn.sp.exception.ShipException;
 import cn.sp.model.GenerateContext;
 import cn.sp.model.GenerateMethodInfo;
@@ -75,23 +76,31 @@ public class GenerateEnumMethodServiceImpl implements GenerateEnumMethodService 
      */
     private void generateCode(GenerateContext generateContext, GenerateMethodInfo generateMethodInfo) {
         Application application = ApplicationManager.getApplication();
-        // 获取空格位置长度
-        int distance = 4;
-        StringBuilder blankSpace = new StringBuilder();
-        for (int i = 0; i < distance; i++) {
-            blankSpace.append(" ");
-        }
         application.runWriteAction(() -> {
-            int currLineNumber = generateContext.getLineNumber();
-            for (int i = 0; i < 3; i++) {
-                // 每一行的起始位置offset
-                int lineStartOffset = generateContext.getDocument().getLineStartOffset(currLineNumber++);
-                String codeLine = CodeTemplate.buildCodeLine(blankSpace.toString(), i, generateMethodInfo);
-                WriteCommandAction.runWriteCommandAction(generateContext.getProject(), () -> {
-                    generateContext.getDocument().insertString(lineStartOffset, codeLine);
-                    generateContext.getEditor().getCaretModel().moveToOffset(lineStartOffset + 2);
-                    generateContext.getEditor().getScrollingModel().scrollToCaret(ScrollType.MAKE_VISIBLE);
-                });
+            if (!MyUtil.isJava8OrHigher(generateContext)) {
+                int currLineNumber = generateContext.getLineNumber();
+                for (int i = 0; i < EnumHelperConstants.JDK_7_TOTAL_LINE_NUM; i++) {
+                    // 每一行的起始位置offset
+                    int lineStartOffset = generateContext.getDocument().getLineStartOffset(currLineNumber++);
+                    String codeLine = CodeTemplate.buildCodeLineForJdk7(i, generateMethodInfo);
+                    WriteCommandAction.runWriteCommandAction(generateContext.getProject(), () -> {
+                        generateContext.getDocument().insertString(lineStartOffset, codeLine);
+                        generateContext.getEditor().getCaretModel().moveToOffset(lineStartOffset + 2);
+                        generateContext.getEditor().getScrollingModel().scrollToCaret(ScrollType.MAKE_VISIBLE);
+                    });
+                }
+            } else {
+                int currLineNumber = generateContext.getLineNumber();
+                for (int i = 0; i < EnumHelperConstants.JDK_8_TOTAL_LINE_NUM; i++) {
+                    // 每一行的起始位置offset
+                    int lineStartOffset = generateContext.getDocument().getLineStartOffset(currLineNumber++);
+                    String codeLine = CodeTemplate.buildCodeLine(i, generateMethodInfo);
+                    WriteCommandAction.runWriteCommandAction(generateContext.getProject(), () -> {
+                        generateContext.getDocument().insertString(lineStartOffset, codeLine);
+                        generateContext.getEditor().getCaretModel().moveToOffset(lineStartOffset + 2);
+                        generateContext.getEditor().getScrollingModel().scrollToCaret(ScrollType.MAKE_VISIBLE);
+                    });
+                }
             }
         });
     }
