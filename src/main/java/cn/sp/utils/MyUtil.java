@@ -1,5 +1,6 @@
 package cn.sp.utils;
 
+import cn.sp.exception.ShipException;
 import cn.sp.model.GenerateContext;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.PsiJavaFile;
@@ -24,6 +25,16 @@ public class MyUtil {
      */
     public static String transferToUpCase(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * 首字母转小写
+     *
+     * @param str
+     * @return
+     */
+    public static String transferToLowerCase(String str) {
+        return str.substring(0, 1).toLowerCase() + str.substring(1);
     }
 
 //    public static void main(String[] args) {
@@ -90,6 +101,9 @@ public class MyUtil {
      * @return
      */
     public static boolean isJava8OrHigher(GenerateContext generateContext) {
+        if (!(generateContext.getPsiFile() instanceof PsiJavaFile)) {
+            throw new ShipException("system error");
+        }
         PsiJavaFile psiJavaFile = (PsiJavaFile) generateContext.getPsiFile();
         boolean isJava8OrHigher = psiJavaFile.getLanguageLevel().isAtLeast(LanguageLevel.JDK_1_8);
         return isJava8OrHigher;

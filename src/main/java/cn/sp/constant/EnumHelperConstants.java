@@ -1,7 +1,5 @@
 package cn.sp.constant;
 
-import java.math.BigDecimal;
-
 /**
  * @Author: Ship
  * @Description:

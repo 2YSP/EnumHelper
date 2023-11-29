@@ -30,24 +30,15 @@ public class CodeTemplate {
 
     static {
         jdk7CodeTemplateMap.put(0, "    public static %s getBy%s(%s %s) {\n");
-        jdk7CodeTemplateMap.put(1, "        for(%s obj: %s.values()){\n");
-        jdk7CodeTemplateMap.put(2, "            if (obj.get%s().equals(%s)){\n");
-        jdk7CodeTemplateMap.put(3, "                return obj;\n");
+        jdk7CodeTemplateMap.put(1, "        for(%s %s: %s.values()){\n");
+        jdk7CodeTemplateMap.put(2, "            if (%s.get%s().equals(%s)){\n");
+        jdk7CodeTemplateMap.put(3, "                return %s;\n");
         jdk7CodeTemplateMap.put(4, "            }\n");
         jdk7CodeTemplateMap.put(5, "        }\n");
         jdk7CodeTemplateMap.put(6, "        return null;\n");
         jdk7CodeTemplateMap.put(7, "    }\n");
     }
 
-
-//    public static TestEnum getByCode(Integer code){
-//        for(TestEnum testEnum: TestEnum.values()){
-//            if (testEnum.getCode().equals(code)){
-//                return testEnum;
-//            }
-//        }
-//        return null;
-//    }
 
     /**
      * @param index 代码行角标
@@ -74,15 +65,18 @@ public class CodeTemplate {
      * @return
      */
     public static String buildCodeLineForJdk7(int index, GenerateMethodInfo info) {
+        String lowerClassName = MyUtil.transferToLowerCase(info.getClassName());
         String baseCode = jdk7CodeTemplateMap.get(index);
         switch (index) {
             case 0:
                 return String.format(baseCode, info.getClassName(), MyUtil.transferToUpCase(info.getFieldName()),
                         info.getFieldType(), info.getFieldName());
             case 1:
-                return String.format(baseCode, info.getClassName(), info.getClassName());
+                return String.format(baseCode, info.getClassName(), lowerClassName, info.getClassName());
             case 2:
-                return String.format(baseCode, MyUtil.transferToUpCase(info.getFieldName()), info.getFieldName());
+                return String.format(baseCode, lowerClassName, MyUtil.transferToUpCase(info.getFieldName()), info.getFieldName());
+            case 3:
+                return String.format(baseCode, lowerClassName);
             default:
                 return baseCode;
         }
